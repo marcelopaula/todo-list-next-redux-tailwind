@@ -1,6 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '..'
 
 export interface ItemState {
   id: number
@@ -10,37 +9,27 @@ export interface ItemState {
 }
 
 interface ListState {
-  data: ItemState[]
+  data: ItemState[],
 }
 
 const initialState: ListState = {
-  data: [
-    {
-      id: 1,
-      description: 'tarefa 1',
-      completed: false,
-      visible: true
-    },
-    {
-      id: 2,
-      description: 'tarefa 2',
-      completed: false,
-      visible: true
-    },
-    {
-      id: 3,
-      description: 'tarefa 3',
-      completed: false,
-      visible: true
-    },
-    {
-      id: 4,
-      description: 'tarefa 4',
-      completed: false,
-      visible: true
-    }
-  ]
+  data: [],
 }
+
+export const fetchLocalStorage = createAsyncThunk(
+  'tasks/fetchLocalStorage',
+  async () => {
+    const response: string|null = await localStorage.getItem('tasks')
+    if (response) {
+      const tasks = await JSON.parse(response);
+      return tasks
+    } else {
+      return []
+    }
+  }
+)
+
+const _addItem = createAction('list/addItem');
 
 export const listSlice = createSlice({
   name: 'list',
@@ -48,6 +37,7 @@ export const listSlice = createSlice({
   reducers: {
     addItem: (state, action:PayloadAction<ItemState>) => {
       state.data.push(action.payload)
+      localStorage.setItem('tasks', JSON.stringify(state.data))
     },
     completeItem: (state, action:PayloadAction<number>) => {
       state.data.map(task => {
@@ -56,6 +46,7 @@ export const listSlice = createSlice({
         }
         return task
       })
+      localStorage.setItem('tasks', JSON.stringify(state.data))
     },
     hideTask: (state, action:PayloadAction<number>) => {
       state.data.map(task => {
@@ -64,7 +55,18 @@ export const listSlice = createSlice({
         }
         return task
       })
-    }
+      
+    }   
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchLocalStorage.fulfilled, (state, action) => {
+      state.data = action.payload.map((task:ItemState) => {
+        if (task.completed) {
+          task.visible = false
+        }
+        return task
+      })
+    })
   }
 })
 
