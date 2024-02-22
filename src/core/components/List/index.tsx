@@ -19,7 +19,7 @@ const  List = () => {
   }, [data])
 
   return (
-    <div>
+    <div className='flex flex-col gap-6'>
       {
         tasks.map((item: ItemState, i: number) => 
           item.visible &&

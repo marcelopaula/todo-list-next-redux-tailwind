@@ -5,8 +5,8 @@ import { getCompleted, getInProgress } from '@/core/utils'
 
 const Resume = () => {
   const list = useSelector((state:RootState) => state.list)
-  const [totalCompleted, setTotalCompleted] = useState<number>();
-  const [totalInProgress, setTotalInProgress] = useState<number>();
+  const [totalCompleted, setTotalCompleted] = useState<number>(0);
+  const [totalInProgress, setTotalInProgress] = useState<number>(0);
 
   useEffect(() => {
     setTotalCompleted(getCompleted(list.data))
@@ -14,18 +14,33 @@ const Resume = () => {
   }, [list])
 
   return(
-    <div>
-      <div>
-        <h2>Total de Tarefas</h2>
-        <p>{list.data.length}</p>
+    <div className='flex flex-row justify-between gap-20 mb-10'>
+      <div className='text-center'>
+        <h2 className='text-slate-400 pb-2'>Total de Tarefas</h2>
+        <p className='text-4xl font-bold'>{list.data.length}</p>
       </div>
-      <div>
-        <h2>Concluídas</h2>
-        <p>{totalCompleted}%</p>
+      <div className='text-center'>
+        <h2 className='text-slate-400 pb-2'>Concluídas</h2>
+        <p 
+          className={
+            `text-4xl font-bold
+            ${totalCompleted >= 50 ?
+            'text-green-600':
+            'text-red-600'}`}
+          >
+            {totalCompleted}%
+        </p>
       </div>
-      <div>
-        <h2>Pendentes</h2>
-        <p>{totalInProgress}%</p>
+      <div className='text-center'>
+        <h2 className="text-slate-400 pb-2">Pendentes</h2>
+        <p 
+          className={
+            `text-4xl font-bold 
+            ${totalInProgress >= 50 ? 
+            'text-red-600' : 'text-green-600'}`}
+          >
+            {totalInProgress}%
+        </p>
       </div>
     </div>
   )

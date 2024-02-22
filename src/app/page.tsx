@@ -10,11 +10,12 @@ import { store } from '@/core/store';
 export default function Home() {
 	return (
 		<Provider store={store}>
-			<main>
-				<h1>Lista de Tarefas</h1>
+			<header className='bg-white py-4 mb-5'>
+				<h1 className='text-center text-xl font-semibold'>Lista de Tarefas</h1> 
+			</header>
+			<main className='max-w-screen-md mx-auto'>
 				<Resume />
 				<Form />
-
 				<List />
 			</main>
 		</Provider>

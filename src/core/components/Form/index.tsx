@@ -26,13 +26,20 @@ const Form = () => {
   }
 
   return(
-    <div>
+    <div className='flex flex-row gap-2 mb-10'>
       <input 
+        className='w-80 flex-auto border !border-slate-300 border-1 rounded px-2'
+        placeholder='Escreva uma nova tarefa'
         type='text' 
         value={item} 
         style={{border: '2px solid'}} 
         onChange={inputChange}/>
-      <button onClick={handleAdd}>Adicionar</button>
+
+      <button
+        className='w-20 flex-auto bg-blue-600 text-white py-2 w-full rounded' 
+        onClick={handleAdd}>
+          Adicionar
+      </button>
     </div>
   )
 }

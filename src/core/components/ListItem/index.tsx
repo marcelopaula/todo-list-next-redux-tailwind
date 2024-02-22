@@ -15,12 +15,12 @@ const ListItem = (props: ItemState) => {
   }
 
   return(
-    <div>
-      {description}
+    <div className='rounded-lg border !border-slate-300 border-1 py-2 px-4 flex flex-row justify-between'>
+      <p className={`self-center ${completed ? 'text-slate-300' : 'text-slate-600'}`}>{description}</p>
       {
         !completed &&
           <button 
-            className='border-2 rounded p-1'
+            className='border-2 rounded-lg p-1 bg-green-600 text-white text-sm py-2 px-4 font-bold uppercase'
             onClick={handleComplete}
           >
             Completar
