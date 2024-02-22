@@ -44,7 +44,6 @@ export const listSlice = createSlice({
     addItem: (state, action:PayloadAction<ItemState>) => {
       state.data.push(action.payload)
     },
-    removeItem: () => {},
     completeItem: (state, action:PayloadAction<number>) => {
       state.data.map(task => {
         if (task.id === action.payload) {
@@ -57,5 +56,5 @@ export const listSlice = createSlice({
   }
 })
 
-export const {addItem, removeItem, completeItem} = listSlice.actions
+export const {addItem, completeItem} = listSlice.actions
 export default listSlice.reducer
