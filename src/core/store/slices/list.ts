@@ -6,6 +6,7 @@ export interface ItemState {
   id: number
   description: string
   completed: boolean
+  visible: boolean
 }
 
 interface ListState {
@@ -17,22 +18,26 @@ const initialState: ListState = {
     {
       id: 1,
       description: 'tarefa 1',
-      completed: true
+      completed: false,
+      visible: true
     },
     {
       id: 2,
       description: 'tarefa 2',
-      completed: true
+      completed: false,
+      visible: true
     },
     {
       id: 3,
       description: 'tarefa 3',
-      completed: true
+      completed: false,
+      visible: true
     },
     {
       id: 4,
       description: 'tarefa 4',
-      completed: false
+      completed: false,
+      visible: true
     }
   ]
 }
@@ -51,10 +56,17 @@ export const listSlice = createSlice({
         }
         return task
       })
-
+    },
+    hideTask: (state, action:PayloadAction<number>) => {
+      state.data.map(task => {
+        if (task.id === action.payload) {
+          task.visible = false
+        }
+        return task
+      })
     }
   }
 })
 
-export const {addItem, completeItem} = listSlice.actions
+export const {addItem, hideTask, completeItem} = listSlice.actions
 export default listSlice.reducer

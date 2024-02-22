@@ -11,7 +11,8 @@ const  List = () => {
     <div>
       {
         data.map((item: ItemState, i: number) => 
-          <ListItem key={i} {...item} />
+          item.visible &&
+            <ListItem key={i} {...item} />
         )
       }
     </div>
