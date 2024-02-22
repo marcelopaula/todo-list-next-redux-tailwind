@@ -45,7 +45,15 @@ export const listSlice = createSlice({
       state.data.push(action.payload)
     },
     removeItem: () => {},
-    completeItem: () => {}
+    completeItem: (state, action:PayloadAction<number>) => {
+      state.data.map(task => {
+        if (task.id === action.payload) {
+          task.completed = true
+        }
+        return task
+      })
+
+    }
   }
 })
 

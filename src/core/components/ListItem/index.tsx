@@ -7,16 +7,21 @@ const ListItem = (props: ItemState) => {
   const dispatch = useDispatch()
 
   const {description, completed} = props
-  // const handleComplete = () => {
-  //   dispatch(completeItem())
-  // }
+  const handleComplete = () => {
+    dispatch(completeItem(props.id))
+  }
 
   return(
     <div>
       {description}
       {
         !completed &&
-          <button className='border-2 rounded p-1'>Completar</button>
+          <button 
+            className='border-2 rounded p-1'
+            onClick={handleComplete}
+          >
+            Completar
+          </button>
       }
     </div>
   )
