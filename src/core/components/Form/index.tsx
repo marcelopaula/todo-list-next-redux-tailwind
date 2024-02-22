@@ -13,7 +13,8 @@ const Form = () => {
     const newItem: ItemState = {
       id: list.data.length + 1,
       description: item,
-      completed: false
+      completed: false,
+      visible: true
     }
     dispatch(addItem(newItem))
 
